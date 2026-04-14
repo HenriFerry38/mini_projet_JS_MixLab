@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MixLab</title>
+  <link rel="stylesheet" href="./css/style.css" />
+</head>
+<body>
+  <header class="hero">
+    <div class="container">
+      <h1>🍸 MixLab</h1>
+      <p>Explore, filtre et découvre des cocktails en quelques clics.</p>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="controls">
+      <div class="search-box">
+        <input
+          type="text"
+          id="searchInput"
+          placeholder="Rechercher un cocktail..."
+        />
+        <button id="searchBtn">Rechercher</button>
+      </div>
+
+      <div class="filters">
+        <button id="randomBtn">Cocktail surprise</button>
+        <select id="alcoholFilter">
+          <option value="all">Tous</option>
+          <option value="Alcoholic">Avec alcool</option>
+          <option value="Non alcoholic">Sans alcool</option>
+        </select>
+      </div>
+    </section>
+
+    <section id="statusMessage" class="status-message"></section>
+
+    <section id="cocktailCard" class="cocktail-card hidden">
+      <div class="cocktail-image-wrapper">
+        <img id="cocktailImage" src="" alt="Image du cocktail" />
+      </div>
+
+      <div class="cocktail-content">
+        <h2 id="cocktailName"></h2>
+        <div class="cocktail-meta">
+          <span id="cocktailCategory"></span>
+          <span id="cocktailAlcohol"></span>
+          <span id="cocktailGlass"></span>
+        </div>
+
+        <div class="cocktail-section">
+          <h3>Ingrédients</h3>
+          <ul id="ingredientsList"></ul>
+        </div>
+
+        <div class="cocktail-section">
+          <h3>Préparation</h3>
+          <p id="cocktailInstructions"></p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script type="module" src="./js/app.js"></script>
+</body>
+</html>
