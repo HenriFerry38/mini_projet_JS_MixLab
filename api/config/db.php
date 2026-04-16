@@ -1,9 +1,11 @@
 <?php
 
-$host = '127.0.0.1';
-$dbname = 'mixlab_db';
-$username = 'root';
-$password = 'root123!';
+$config = require __DIR__ . '/db.local.php';
+
+$host = $config['host'];
+$dbname = $config['dbname'];
+$username = $config['username'];
+$password = $config['password'];
 
 try {
     $pdo = new PDO(
@@ -19,8 +21,7 @@ try {
     http_response_code(500);
     header('Content-Type: application/json; charset=utf-8');
     echo json_encode([
-        'error' => 'Connexion à la base impossible',
-        'details' => $e->getMessage()
+        'error' => 'Connexion à la base impossible'
     ], JSON_UNESCAPED_UNICODE);
     exit;
 }
