@@ -312,6 +312,11 @@ select {
   color: #bfeaff;
 }
 
+.badge--glass {
+  background: rgba(255, 255, 255, 0.08);
+  color: #d6dbff;
+}
+
 .cocktail-card__text {
   margin: 0 0 1.2rem;
   color: var(--text-soft);

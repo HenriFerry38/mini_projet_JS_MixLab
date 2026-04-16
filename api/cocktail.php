@@ -5,6 +5,15 @@ header('Access-Control-Allow-Origin: *');
 
 require __DIR__ . '/config/db.php';
 
+
+if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
+    http_response_code(405);
+    echo json_encode([
+        'error' => 'Méthode non autorisée'
+    ], JSON_UNESCAPED_UNICODE);
+    exit;
+}
+
 $id = isset($_GET['id']) ? (int) $_GET['id'] : 0;
 
 if ($id <= 0) {

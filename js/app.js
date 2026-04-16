@@ -3,6 +3,9 @@ const ApiURL = "http://127.0.0.1:8000"
 const cocktailsGrid = document.getElementById("cocktailsGrid");
 const searchInput = document.getElementById("searchInput");
 const alcoholFilter = document.getElementById("alcoholFilter");
+const categoryFilter = document.getElementById("categoryFilter");
+const glassFilter = document.getElementById("glassFilter");
+const resetFiltersBtn = document.getElementById("resetFiltersBtn");
 const randomBtn = document.getElementById("randomBtn");
 const statusMessage = document.getElementById("statusMessage");
 
@@ -74,6 +77,7 @@ async function openModal(cocktail) {
 async function init() {
   await loadCocktails();
   bindEvents();
+  populateFilters();
   renderCocktails(cocktails);
 }
 
@@ -96,6 +100,9 @@ async function loadCocktails() {
 function bindEvents() {
   searchInput.addEventListener("input", applyFilters);
   alcoholFilter.addEventListener("change", applyFilters);
+  categoryFilter.addEventListener("change", applyFilters);
+  glassFilter.addEventListener("change", applyFilters);
+  resetFiltersBtn.addEventListener("click", resetFilters);
   randomBtn.addEventListener("click", () => {
     animateButton(randomBtn);
     setTimeout(() => {
@@ -116,6 +123,8 @@ function bindEvents() {
 function applyFilters() {
   const searchValue = searchInput.value.trim().toLowerCase();
   const alcoholValue = alcoholFilter.value;
+  const categoryValue = categoryFilter.value;
+  const glassValue = glassFilter.value;
 
   filteredCocktails = cocktails.filter((cocktail) => {
     const matchName = cocktail.nom.toLowerCase().includes(searchValue);
@@ -125,13 +134,19 @@ function applyFilters() {
       (alcoholValue === "avec" && cocktail.avec_alcool === true) ||
       (alcoholValue === "sans" && cocktail.avec_alcool === false);
 
-    return matchName && matchAlcohol;
+    const matchCategory =
+      categoryValue === "all" || cocktail.categorie === categoryValue;
+
+    const matchGlass =
+      glassValue === "all" || cocktail.verre === glassValue;
+
+    return matchName && matchAlcohol && matchCategory && matchGlass;
   });
 
   renderCocktails(filteredCocktails);
 
   if (filteredCocktails.length === 0) {
-    setStatus("Aucun cocktail ne correspond à la recherche.");
+    setStatus("Aucun cocktail ne correspond aux filtres sélectionnés.");
     return;
   }
 
@@ -160,19 +175,20 @@ function renderCocktails(items) {
 
     card.innerHTML = `
       <div class="cocktail-card__media">
-        <img src="${cocktail.image}" alt="${cocktail.nom}">
+        <img src="${cocktail.image}" alt="${escapeHtml(cocktail.nom)}">
       </div>
 
       <div class="cocktail-card__body">
-        <h3 class="cocktail-card__title">${cocktail.nom}</h3>
+        <h3 class="cocktail-card__title">${escapeHtml(cocktail.nom)}</h3>
 
         <div class="cocktail-card__badges">
-          <span class="badge badge--category">${cocktail.categorie}</span>
+          <span class="badge badge--category">${escapeHtml(cocktail.nom)}</span>
           <span class="badge badge--difficulty">${capitalize(cocktail.niveau_difficulte)}</span>
           <span class="badge badge--alcohol">${cocktail.avec_alcool ? "Avec alcool" : "Sans alcool"}</span>
+          <span class="badge badge--glass">${escapeHtml(cocktail.verre)}</span>
         </div>
 
-        <p class="cocktail-card__text">${cocktail.resume_court || cocktail.description}</p>
+        <p class="cocktail-card__text">${escapeHtml(cocktail.resume_court || cocktail.description)}</p>
 
         <div class="cocktail-card__footer">
           <button class="btn btn--outline" data-id="${cocktail.id}">
@@ -222,6 +238,38 @@ function animateButton(button) {
   }, 300);
 }
 
+function populateFilters() {
+  const categories = [...new Set(cocktails.map((cocktail) => cocktail.categorie))].sort();
+  const glasses = [...new Set(cocktails.map((cocktail) => cocktail.verre))].sort();
+
+  categoryFilter.innerHTML = `<option value="all">Toutes les catégories</option>`;
+  glassFilter.innerHTML = `<option value="all">Tous les verres</option>`;
+
+  categories.forEach((category) => {
+    const option = document.createElement("option");
+    option.value = category;
+    option.textContent = category;
+    categoryFilter.appendChild(option);
+  });
+
+  glasses.forEach((glass) => {
+    const option = document.createElement("option");
+    option.value = glass;
+    option.textContent = glass;
+    glassFilter.appendChild(option);
+  });
+}
+
+function resetFilters() {
+  searchInput.value = "";
+  alcoholFilter.value = "all";
+  categoryFilter.value = "all";
+  glassFilter.value = "all";
+
+  filteredCocktails = [...cocktails];
+  renderCocktails(filteredCocktails);
+  setStatus(`${filteredCocktails.length} cocktail(s) chargé(s).`);
+}
 
 function showRandomCocktail() {
   if (!filteredCocktails.length) {
@@ -248,4 +296,13 @@ function closeModal() {
 
 function setStatus(message) {
   statusMessage.textContent = message;
+}
+
+function escapeHtml(value = "") {
+  return String(value)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
 }
