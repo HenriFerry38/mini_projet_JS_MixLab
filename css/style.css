@@ -60,7 +60,7 @@ select {
   min-height: 520px;
   background:
     linear-gradient(rgba(6, 8, 20, 0.35), rgba(6, 8, 20, 0.75)),
-    url("../assets/hero.jpg") center/cover no-repeat;
+    url("../assets/hero.webp") center/cover no-repeat;
   display: flex;
   align-items: center;
   padding: 2rem 0 2rem;
@@ -129,7 +129,28 @@ select {
   display: flex;
   gap: 1rem;
   justify-content: center;
+  flex-direction: column;
   flex-wrap: wrap;
+  margin-bottom: 2rem;
+}
+
+#resetFiltersBtn {
+  width: 220px;
+  align-self: flex-end;
+}
+
+@media (max-width: 768px) {
+  .cocktails-header {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .cocktails-header h2 {
+    font-size: 1.6rem;
+  }
+
 }
 
 .btn,

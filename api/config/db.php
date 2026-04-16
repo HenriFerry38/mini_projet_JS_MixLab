@@ -1,6 +1,6 @@
 <?php
 
-$config = require __DIR__ . '/db.local.php';
+$config = require __DIR__ . '/db.prod.php';
 
 $host = $config['host'];
 $dbname = $config['dbname'];

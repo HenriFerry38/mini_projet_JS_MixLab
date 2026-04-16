@@ -1,4 +1,4 @@
-const ApiURL = "http://127.0.0.1:8000"
+const ApiURL = "https://ferryhenri.alwaysdata.net/mixlab/"
 
 const cocktailsGrid = document.getElementById("cocktailsGrid");
 const searchInput = document.getElementById("searchInput");
@@ -30,7 +30,7 @@ init();
 
 async function openModal(cocktail) {
   try {
-    const response = await fetch(`${ApiURL}/cocktail.php?id=${cocktail.id}`);
+    const response = await fetch(`${ApiURL}api/cocktail.php?id=${cocktail.id}`);
 
     if (!response.ok) {
       throw new Error("Erreur chargement recette");
@@ -83,7 +83,7 @@ async function init() {
 
 async function loadCocktails() {
   try {
-    const response = await fetch(`${ApiURL}/cocktails.php`);
+    const response = await fetch(`${ApiURL}api/cocktails.php`);
 
     if (!response.ok) {
       throw new Error("Impossible de charger les cocktails.");
@@ -289,6 +289,8 @@ function capitalize(str) {
 }
 
 function closeModal() {
+  document.activeElement.blur();
+
   recipeModal.classList.add("hidden");
   recipeModal.setAttribute("aria-hidden", "true");
   cocktailsGrid.classList.remove("is-blurred");
