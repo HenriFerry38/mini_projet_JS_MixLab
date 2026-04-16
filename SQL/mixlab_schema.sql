@@ -3,9 +3,9 @@
 -- Auteur : Henri Ferry
 -- Description : Schéma SQL des cocktails
 -- ============================================
-DROP DATABASE IF EXISTS mixlab_db;
-CREATE DATABASE IF NOT EXISTS mixlab_db;
-USE mixlab_db;
+DROP DATABASE IF EXISTS ferryhenri_mixlab;
+CREATE DATABASE IF NOT EXISTS ferryhenri_mixlab;
+USE ferryhenri_mixlab;
 
 DROP TABLE IF EXISTS cocktail_ingredient;
 DROP TABLE IF EXISTS cocktail;

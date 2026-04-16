@@ -1,4 +1,4 @@
-USE mixlab_db;
+USE ferryhenri_mixlab;
 
 -- =========================
 -- INSERTION DES CATEGORIES
