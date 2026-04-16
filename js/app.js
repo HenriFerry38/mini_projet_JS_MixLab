@@ -35,8 +35,10 @@ async function openModal(cocktail) {
 
     const data = await response.json();
 
+    cocktailsGrid.classList.add("is-blurred");
+    
     // IMAGE
-    modalImage.src = `./${data.image}`;
+    modalImage.src = data.image;
     modalImage.alt = data.nom;
 
     // TITRE
@@ -94,7 +96,12 @@ async function loadCocktails() {
 function bindEvents() {
   searchInput.addEventListener("input", applyFilters);
   alcoholFilter.addEventListener("change", applyFilters);
-  randomBtn.addEventListener("click", showRandomCocktail);
+  randomBtn.addEventListener("click", () => {
+    animateButton(randomBtn);
+    setTimeout(() => {
+      showRandomCocktail();
+    }, 120);
+  });
 
   closeModalBtn.addEventListener("click", closeModal);
   modalBackdrop.addEventListener("click", closeModal);
@@ -149,6 +156,7 @@ function renderCocktails(items) {
   items.forEach((cocktail) => {
     const card = document.createElement("article");
     card.className = "cocktail-card";
+    card.dataset.id = cocktail.id;
 
     card.innerHTML = `
       <div class="cocktail-card__media">
@@ -160,7 +168,7 @@ function renderCocktails(items) {
 
         <div class="cocktail-card__badges">
           <span class="badge badge--category">${cocktail.categorie}</span>
-          <span class="badge badge--difficulty">${cocktail.niveau_difficulte}</span>
+          <span class="badge badge--difficulty">${capitalize(cocktail.niveau_difficulte)}</span>
           <span class="badge badge--alcohol">${cocktail.avec_alcool ? "Avec alcool" : "Sans alcool"}</span>
         </div>
 
@@ -175,11 +183,45 @@ function renderCocktails(items) {
     `;
 
     const button = card.querySelector("button");
-    button.addEventListener("click", () => openModal(cocktail));
+    button.addEventListener("click", () => {
+      animateButton(button);
+      setTimeout(() => {
+        openModal(cocktail);
+      },120);
+    });
 
     cocktailsGrid.appendChild(card);
   });
 }
+
+function highlightCard(cocktailId) {
+  const targetCard = document.querySelector(`.cocktail-card[data-id="${cocktailId}"]`);
+
+  if (!targetCard) return;
+
+  targetCard.classList.remove("is-highlighted");
+
+  requestAnimationFrame(() => {
+    targetCard.classList.add("is-highlighted");
+  });
+
+  setTimeout(() => {
+    targetCard.classList.remove("is-highlighted");
+  }, 700);
+}
+
+function animateButton(button) {
+  button.classList.remove("is-clicked");
+
+  requestAnimationFrame(() => {
+    button.classList.add("is-clicked");
+  });
+
+  setTimeout(() => {
+    button.classList.remove("is-clicked");
+  }, 300);
+}
+
 
 function showRandomCocktail() {
   if (!filteredCocktails.length) {
@@ -189,6 +231,7 @@ function showRandomCocktail() {
 
   const randomIndex = Math.floor(Math.random() * filteredCocktails.length);
   const cocktail = filteredCocktails[randomIndex];
+  highlightCard(cocktail.id);
   openModal(cocktail);
 }
 
@@ -200,6 +243,7 @@ function capitalize(str) {
 function closeModal() {
   recipeModal.classList.add("hidden");
   recipeModal.setAttribute("aria-hidden", "true");
+  cocktailsGrid.classList.remove("is-blurred");
 }
 
 function setStatus(message) {

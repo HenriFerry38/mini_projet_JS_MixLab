@@ -161,6 +161,22 @@ select {
   box-shadow: 0 0 18px rgba(255, 183, 3, 0.38);
 }
 
+.btn.is-clicked {
+  animation: buttonPulse 0.28s ease;
+}
+
+@keyframes buttonPulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(0.90);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
 .main {
   padding: 3rem 0 5rem;
 }
@@ -198,6 +214,20 @@ select {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 1.5rem;
+}
+
+/* Animation des cards quand la modale est ouverte */
+.cocktails-grid.is-blurred .cocktail-card {
+  opacity: 0.25;
+  transform: translateY(10px) scale(0.98);
+  filter: blur(2px);
+  pointer-events: none;
+  transition: all 0.25s ease;
+}
+
+/* état normal */
+.cocktail-card {
+  transition: all 0.25s ease;
 }
 
 .cocktails-section {
@@ -342,6 +372,26 @@ select {
   display: grid;
   grid-template-columns: 1fr 1.1fr;
   box-shadow: 0 0 35px rgba(154, 92, 255, 0.2);
+
+  transform: scale(0.94) translateY(16px);
+  opacity: 0;
+  transition: transform 0.38s ease, opacity 0.38s ease;
+}
+.modal:not(.hidden) .modal__dialog {
+  transform: scale(1) translateY(0);
+  opacity: 1;
+}
+
+.modal__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(4, 6, 16, 0.76);
+  backdrop-filter: blur(6px);
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+.modal:not(.hidden) .modal__backdrop {
+  opacity: 1;
 }
 
 .modal__close {
@@ -356,6 +406,8 @@ select {
   color: white;
   font-size: 1.5rem;
   cursor: pointer;
+  z-index: 5;
+  pointer-events: auto;
 }
 
 .modal__image-wrap img {
@@ -366,6 +418,24 @@ select {
 
 .modal__content {
   padding: 2rem;
+  opacity: 0;
+  transform: translateY(18px);
+}
+
+.modal:not(.hidden) .modal__content {
+  animation: modalContentFade 0.65s ease forwards;
+  animation-delay: 0.12s;
+}
+
+@keyframes modalContentFade {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .modal__content h3 {
@@ -437,6 +507,28 @@ select {
   .cocktail-card__title {
     font-size: 1.7rem;
   }
+
+  .cocktail-card.is-highlighted {
+  animation: cardFlash 0.7s ease;
+}
+
+@keyframes cardFlash {
+  0% {
+    box-shadow:
+      0 0 0 1px rgba(255, 255, 255, 0.04),
+      0 0 0 rgba(255, 63, 210, 0);
+  }
+  40% {
+    box-shadow:
+      0 0 0 1px rgba(255, 255, 255, 0.04),
+      0 0 32px rgba(255, 63, 210, 0.45);
+  }
+  100% {
+    box-shadow:
+      0 0 0 1px rgba(255, 255, 255, 0.04),
+      0 0 25px rgba(154, 92, 255, 0.18);
+  }
+}
 
   .btn,
   .select {

@@ -48,7 +48,13 @@ INSERT INTO ingredient (nom) VALUES
 ('Jus de passion'),
 ('Tonic'),
 ('Concombre'),
-('Basilic frais');
+('Basilic frais'),
+('Whisky'),
+('Carré de Sucre'),
+('Vermouth dry'),
+('Olive'),
+('Zeste d''orange'),
+('Gros Glaçon');
 
 -- ========================
 -- INSERTION DES COCKTAILS
@@ -64,7 +70,7 @@ VALUES
     'facile',
     5,
     TRUE,
-    'images/mojito.jpg',
+    'https://res.cloudinary.com/dxhnwdzfp/image/upload/v1776274659/SexOnTheBeach_ohw0k3.png',
     1,
     1
 ),
@@ -76,7 +82,7 @@ VALUES
     'facile',
     4,
     TRUE,
-    'images/sex-on-the-beach.jpg',
+    'https://res.cloudinary.com/dxhnwdzfp/image/upload/v1776274659/SexOnTheBeach_ohw0k3.png',
     2,
     1
 ),
@@ -88,7 +94,7 @@ VALUES
     'facile',
     5,
     FALSE,
-    'images/virgin-colada.jpg',
+    'https://res.cloudinary.com/dxhnwdzfp/image/upload/v1776274660/VirginCollada_keqfhz.png',
     3,
     5
 ),
@@ -100,7 +106,7 @@ VALUES
     'moyen',
     5,
     TRUE,
-    'images/margarita.jpg',
+    'https://res.cloudinary.com/dxhnwdzfp/image/upload/v1776274654/Margarita_eglq9l.png',
     1,
     4
 ),
@@ -112,7 +118,7 @@ VALUES
     'facile',
     3,
     TRUE,
-    'images/gin-tonic-concombre.jpg',
+    'https://res.cloudinary.com/dxhnwdzfp/image/upload/v1776274653/GinTonicConcombre_xhhhft.png',
     4,
     1
 ),
@@ -124,7 +130,7 @@ VALUES
     'moyen',
     6,
     TRUE,
-    'images/mai-tai.jpg',
+    'https://res.cloudinary.com/dxhnwdzfp/image/upload/v1776274654/MaiTai_ww2ztp.png',
     5,
     5
 ),
@@ -136,7 +142,7 @@ VALUES
     'moyen',
     5,
     TRUE,
-    'images/berry-splash.jpg',
+    'https://res.cloudinary.com/dxhnwdzfp/image/upload/v1776274652/BerrySplash_vypsvc.png',
     4,
     4
 ),
@@ -148,9 +154,33 @@ VALUES
     'facile',
     4,
     FALSE,
-    'images/pomme-basilic-fizz.jpg',
+    'https://res.cloudinary.com/dxhnwdzfp/image/upload/v1776274658/PommeBasilicFizz_qv6zim.png',
     3,
     1
+),
+(
+    'Old Fashioned',
+    'Whisky, sucre, amer...',
+    'Un grand classique on the rock.',
+    'Déposer un carré de sucre dans le verre, imbiber le d''amer type Angostura et ajouté le whisky. Servir avec un gros glaçon.',
+    'facile',
+    3,
+    TRUE,
+    'https://res.cloudinary.com/dxhnwdzfp/image/upload/v1776274657/OldFashionned_wuerpc.png',
+    1,
+    3
+),
+(
+    'Dry Martini',
+    'Gin, Vermouth, Olive...',
+    'Explorez l''élégance intemporelle du Dry Martini.',
+    'Munissez-vous d’un shaker et déposez-y quelques glaçons. Versez le vermouth ainsi que le Gin. Secouez énergiquement pendant une dizaine de secondes. Versez le mélange en retenant les glaçons. Décorer d''une olive ou zeste de citron',
+    'facile',
+    5,
+    TRUE,
+    'https://res.cloudinary.com/dxhnwdzfp/image/upload/v1776274655/Martini_h8rraa.png',
+    1,
+    2
 );
 -- ==================================
 -- INSERTION COCKTAIL / INGREDIENTS
@@ -216,3 +246,22 @@ INSERT INTO cocktail_ingredient (cocktail_id, ingredient_id, quantite, unite) VA
 (8, 7, 2, 'cl'),
 (8, 13, 6, 'cl'),
 (8, 14, 1, 'portion');
+
+-- Dry Martini
+INSERT INTO cocktail_ingredient (cocktail_id, ingredient_id, quantite, unite) VALUES
+(10, 3, 6, 'cl'),
+(10, 28, 2, 'cl'),
+(10, 29, 1, 'brochette');
+
+-- Old Fashioned
+INSERT INTO cocktail_ingredient (cocktail_id, ingredient_id, quantite, unite) VALUES
+(9, 27, 1, 'cl'),
+(9, 20, 3, 'traits'),
+(9, 13, 1, 'goutte'),
+(9, 26, 6, 'cl'),
+(9,30, 1, ''),
+(9,31, 1, '');
+
+
+
+
